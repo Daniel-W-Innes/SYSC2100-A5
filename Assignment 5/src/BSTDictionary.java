@@ -1,20 +1,21 @@
-public class BSTDictionary<T, K  extends Sortable> {
-    private BSTNode<T,K> head = null;
-    public void insert(K sortableString, T entry) {
-        if(head == null){
-            head = new BSTNode<>(sortableString, entry, null,null);
-        }else{
+class BSTDictionary<T, K extends Sortable> {
+    private BSTNode<T, K> head = null;
+
+    void insert(K sortableString, T entry) {
+        if (head == null) {
+            head = new BSTNode<>(sortableString, entry, null, null);
+        } else {
             boolean c = true;
-            BSTNode<T,K> node = head;
-            while (c){
-                if(node.getKey().compareTo(sortableString) < 0){
-                    if (node.getLeft() == null){
-                        node.setLeft(new BSTNode<>(sortableString, entry, null,null));
+            BSTNode<T, K> node = head;
+            while (c) {
+                if (node.getKey().compareTo(sortableString) < 0) {
+                    if (node.getLeft() == null) {
+                        node.setLeft(new BSTNode<>(sortableString, entry, null, null));
                         c = false;
                     }
-                }else{
-                    if (node.getRight() == null){
-                        node.setRight(new BSTNode<>(sortableString, entry, null,null));
+                } else {
+                    if (node.getRight() == null) {
+                        node.setRight(new BSTNode<>(sortableString, entry, null, null));
                         c = false;
                     }
                 }
@@ -22,73 +23,95 @@ public class BSTDictionary<T, K  extends Sortable> {
         }
     }
 
-    public void printTree() {
+    void printTree() {
 
     }
 
-    public K depth() {
+    K depth() {
         return null;
     }
 
-    public void delete(K sortableString) {
-        BSTNode<T,K> node = head;
-        BSTNode<T,K> preNode = null;
+    void delete(K sortableString) {
+        BSTNode<T, K> node = head;
+        BSTNode<T, K> preNode = null;
         boolean isLeft = false;
-        while (node != null){
+        while (node != null) {
             Sortable key = node.getKey();
-            if(key.compareTo(sortableString) == 0){
-                if(preNode == null){
-                    if(head.getRight() == null){
-                        head = head.getLeft();
-                    }else{
-                        BSTNode<T,K> nextNode;
-                        if(node.getLeft() == null){
-                            nextNode = node;
-                            nextNode.setLeft(head.getLeft());
-                            head = nextNode;
-                        }else {
-                            while (node.getLeft().getLeft() != null){
-                                node = node.getLeft();
-                            }
-                            nextNode = node.getLeft();
-                            node.setLeft(nextNode.getRight());
-                            nextNode.setLeft(head.getLeft());
-                            nextNode.setRight(head.getRight());
-                            head = nextNode;
-                        }
+            if (key.compareTo(sortableString) == 0) {
+                if (node.getLeft() == null && node.getRight() == null) {
+                    if (isLeft) {
+                        preNode.setLeft(null);
+                    } else if (preNode != null) {
+                        preNode.setRight(null);
+                    } else {
+                        head = null;
+                    }
+                } else if (node.getLeft() == null && node.getRight() != null) {
+                    if (isLeft) {
+                        preNode.setLeft(node.getRight());
+                    } else if (preNode != null) {
+                        preNode.setRight(node.getRight());
+                    } else {
+                        head = node.getRight();
+                    }
+                } else if (node.getRight() == null && node.getLeft() != null) {
+                    if (isLeft) {
+                        preNode.setLeft(node.getLeft());
+                    } else if (preNode != null) {
+                        preNode.setRight(node.getLeft());
+                    } else {
+                        head = node.getLeft();
                     }
                 } else {
-                    if (isLeft){
-                        preNode.setLeft(node.getRight());
-
-                    }else{
-
+                    BSTNode<T, K> successorNode = node.getRight();
+                    BSTNode<T, K> preSuccessorNode = node;
+                    if (successorNode.getLeft() == null) {
+                        successorNode.setLeft(node.getLeft());
+                        if (isLeft) {
+                            preNode.setLeft(successorNode);
+                        } else if (preNode != null) {
+                            preNode.setRight(successorNode);
+                        } else {
+                            head = successorNode;
+                        }
+                    } else {
+                        while (successorNode.getLeft() != null) {
+                            preSuccessorNode = successorNode;
+                            successorNode = successorNode.getLeft();
+                        }
+                        preSuccessorNode.setLeft(successorNode.getRight());
+                        successorNode.setLeft(node.getLeft());
+                        successorNode.setRight(node.getRight());
+                        if (isLeft) {
+                            preNode.setLeft(successorNode);
+                        } else if (preNode != null) {
+                            preNode.setRight(successorNode);
+                        } else {
+                            head = successorNode;
+                        }
                     }
                 }
-            }else if(key.compareTo(sortableString) < 0){
+            } else if (key.compareTo(sortableString) < 0) {
                 preNode = node;
                 node = node.getLeft();
                 isLeft = true;
-            }else if(key.compareTo(sortableString) > 0){
+            } else {
                 preNode = node;
                 node = node.getRight();
                 isLeft = false;
             }
         }
-        if(head.getKey().compareTo(sortableString) == 0){
-
-        }
     }
 
-    public BSTNode<T,K> search(K sortableString) {
-        BSTNode<T,K> node = head;
-        while (node != null){
+    BSTNode<T, K> search(K sortableString) {
+        BSTNode<T, K> node = head;
+        while (node != null) {
             Sortable key = node.getKey();
-            if(key.compareTo(sortableString) == 0){
+            if (key.compareTo(sortableString) == 0) {
                 return node;
-            }else if(key.compareTo(sortableString) < 0){
+            } else if (key.compareTo(sortableString) < 0) {
                 node = node.getLeft();
-            }else if(key.compareTo(sortableString) > 0){
+            } else if (key.compareTo(sortableString) > 0) {
                 node = node.getRight();
             }
         }
