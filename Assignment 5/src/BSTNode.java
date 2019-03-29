@@ -1,5 +1,5 @@
 // The "BSTNode" class.
-public class BSTNode<E, K extends Sortable> {
+class BSTNode<E, K extends Sortable> {
     private K key;
 
     private E element;

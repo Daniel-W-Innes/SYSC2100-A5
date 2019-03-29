@@ -1,7 +1,7 @@
 // The "Sortable" interface.
 // This interface is used by classes to compare two
 // objects so that they can be sorted.
-public interface Sortable {
+interface Sortable {
     // Compare two objects. If the object being compared is less than
     // 'other', then compareTo returns -1, if the objects are equivalent,
     // then it returns 0, otherwise it returns 1. This is similar to the

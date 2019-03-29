@@ -5,7 +5,7 @@
 // prints the initial dictionary (i.e., the one after
 // inserting the first 676 entries) and searches for 6 
 // randomly chosen entries. 
-public class DictionaryTest {
+class DictionaryTest {
     private static String[] entries = new String[26 * 26];
 
     private static void fill() {

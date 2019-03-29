@@ -1,4 +1,4 @@
-public interface Dictionary<E, K extends Sortable> {
+interface Dictionary<E, K extends Sortable> {
     // search for an entry with key KEY and return the object
     E search(K key);
 

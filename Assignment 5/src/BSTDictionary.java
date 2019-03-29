@@ -66,57 +66,48 @@ class BSTDictionary<T, K extends Sortable> implements Dictionary<T, K> {
         BSTNode<T, K> preNode = null;
         boolean isLeft = false;
         while (node != null) {
-            Sortable key = node.getKey();
-            if (key.compareTo(sortableString) == 0) {
+            if (node.getKey().compareTo(sortableString) == 0) {
                 if (node.getLeft() == null && node.getRight() == null) {
                     if (isLeft) {
                         preNode.setLeft(null);
-                        return;
                     } else if (preNode != null) {
                         preNode.setRight(null);
-                        return;
                     } else {
                         head = null;
-                        return;
                     }
+                    return;
                 } else if (node.getLeft() == null && node.getRight() != null) {
                     if (isLeft) {
                         preNode.setLeft(node.getRight());
-                        return;
                     } else if (preNode != null) {
                         preNode.setRight(node.getRight());
-                        return;
                     } else {
                         head = node.getRight();
-                        return;
                     }
+                    return;
                 } else if (node.getRight() == null && node.getLeft() != null) {
                     if (isLeft) {
                         preNode.setLeft(node.getLeft());
-                        return;
                     } else if (preNode != null) {
                         preNode.setRight(node.getLeft());
-                        return;
                     } else {
                         head = node.getLeft();
-                        return;
                     }
+                    return;
                 } else {
                     BSTNode<T, K> successorNode = node.getRight();
-                    BSTNode<T, K> preSuccessorNode = node;
                     if (successorNode.getLeft() == null) {
                         successorNode.setLeft(node.getLeft());
                         if (isLeft) {
                             preNode.setLeft(successorNode);
-                            return;
                         } else if (preNode != null) {
                             preNode.setRight(successorNode);
-                            return;
                         } else {
                             head = successorNode;
-                            return;
                         }
+                        return;
                     } else {
+                        BSTNode<T, K> preSuccessorNode = node;
                         while (successorNode.getLeft() != null) {
                             preSuccessorNode = successorNode;
                             successorNode = successorNode.getLeft();
@@ -126,17 +117,15 @@ class BSTDictionary<T, K extends Sortable> implements Dictionary<T, K> {
                         successorNode.setRight(node.getRight());
                         if (isLeft) {
                             preNode.setLeft(successorNode);
-                            return;
                         } else if (preNode != null) {
                             preNode.setRight(successorNode);
-                            return;
                         } else {
                             head = successorNode;
-                            return;
                         }
+                        return;
                     }
                 }
-            } else if (key.compareTo(sortableString) > 0) {
+            } else if (node.getKey().compareTo(sortableString) > 0) {
                 preNode = node;
                 node = node.getLeft();
                 isLeft = true;
