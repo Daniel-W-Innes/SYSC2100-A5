@@ -1,26 +1,25 @@
 // The "DictionaryTest" class.
-// This class tests the BST implementations of the Dictionary
-// interface by inserting 676 different entries, removing
+// This class tests the BST implementations of the Dictionary 
+// interface by inserting 676 different entries, removing 
 // half of them, and inserting 156 more entries. It also
 // prints the initial dictionary (i.e., the one after
-// inserting the first 676 entries) and searches for 6
-// randomly chosen entries.
+// inserting the first 676 entries) and searches for 6 
+// randomly chosen entries. 
 public class DictionaryTest {
-    protected static String[] entries = new String[26 * 26];
+    private static String[] entries = new String[26 * 26];
 
-    protected static void fill() {
+    private static void fill() {
         // Insert 26 * 26 entries
         for (int i = 0; i < 26; i++)
             for (int j = 0; j < 26; j++) {
-                StringBuffer s = new StringBuffer();
-                s.append((char) ((int) 'A' + i));
-                s.append((char) ((int) 'A' + j));
-                entries[i * 26 + j] = s.toString();
+                String s = String.valueOf((char) ((int) 'A' + i)) +
+                        (char) ((int) 'A' + j);
+                entries[i * 26 + j] = s;
             }
     } // fill method
 
     public static void main(String[] args) {
-        BSTDictionary<String, SortableString> dict1 = new BSTDictionary<String, SortableString>();
+        BSTDictionary<String, SortableString> dict1 = new BSTDictionary<>();
 
         // Insert lots of entries
         fill();

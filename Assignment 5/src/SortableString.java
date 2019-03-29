@@ -1,9 +1,9 @@
 // The "SortableString" class.
 // A "String-holding" class which implements the Sortable interface.
 class SortableString implements Sortable {
-    protected String s;
+    private String s;
 
-    public SortableString(String x) {
+    SortableString(String x) {
         s = x;
     } // SortableString constructor
 
