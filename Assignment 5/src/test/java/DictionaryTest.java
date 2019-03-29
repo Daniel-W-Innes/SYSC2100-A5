@@ -35,6 +35,12 @@ class DictionaryTest {
 
         // print the two dictionaries
         dict1.printTree();
+        dict1.printJSON();
+        dict1.save();
+        dict1.clear();
+        dict1.printJSON();
+        dict1.load();
+        dict1.printJSON();
         // print the depth
         System.out.println("The initial BST tree has a maximum depth of "
                 + dict1.depth());
