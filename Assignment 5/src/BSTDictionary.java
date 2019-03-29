@@ -1,6 +1,19 @@
+/**
+ * A implementation of a BST using BSTNode.
+ * @author Daniel Innes 101067175
+ * @param <T> The data type of the element
+ * @param <K>The data type of the key
+ * @see BSTNode
+ */
+
 class BSTDictionary<T, K extends Sortable> implements Dictionary<T, K> {
     private BSTNode<T, K> head = null;
 
+    /**
+     * Insert a new node into the dictionary, will override if keys are not distinct
+     * @param sortableString The key for the new node
+     * @param entry The element for the new node
+     */
     public void insert(K sortableString, T entry) {
         if (head == null) {
             head = new BSTNode<>(sortableString, entry, null, null);
@@ -15,52 +28,76 @@ class BSTDictionary<T, K extends Sortable> implements Dictionary<T, K> {
                     } else {
                         node = node.getLeft();
                     }
-                } else {
+                } else if (node.getKey().compareTo(sortableString) < 0){
                     if (node.getRight() == null) {
                         node.setRight(new BSTNode<>(sortableString, entry, null, null));
                         c = false;
                     } else {
                         node = node.getRight();
                     }
+                } else {
+                    node = new BSTNode<>(sortableString, entry, null, null);
+                    c = false;
                 }
             }
         }
     }
 
+
+    /**
+     * Print the entire tree as a inorder list of nodes
+     */
     public void printTree() {
         if (head == null) {
             System.out.println("The tree is empty");
         } else {
-            printTreeR(head);
+            printSudTree(head);
         }
     }
 
-    private void printTreeR(BSTNode<T, K> node) {
+    /**
+     * Print the tree from node as a inorder list of nodes
+     * @param node The starting node
+     */
+    private void printSudTree(BSTNode<T, K> node) {
         if (node != null) {
-            printTreeR(node.getLeft());
+            printSudTree(node.getLeft());
             System.out.println("(Key = " + node.getKey().toString() + ", Element = " + node.getElement().toString() + ")");
-            printTreeR(node.getRight());
+            printSudTree(node.getRight());
         }
     }
 
+    /**
+     * Find the depth of the BST
+     * @return The depth
+     */
     public int depth() {
         if (head == null) {
             return 0;
         } else {
-            return depthR(head);
+            return subDepth(head);
         }
     }
 
-    private int depthR(BSTNode<T, K> node) {
+    /**
+     * Find the depth of the sub BST starting from node
+     * @param node The starting node
+     * @return The depth
+     */
+    private int subDepth(BSTNode<T, K> node) {
         if (node == null) {
             return 0;
         } else {
-            int leftDepth = 1 + depthR(node.getLeft());
-            int rightDepth = 1 + depthR(node.getRight());
+            int leftDepth = 1 + subDepth(node.getLeft());
+            int rightDepth = 1 + subDepth(node.getRight());
             return (leftDepth < rightDepth) ? rightDepth : leftDepth;
         }
     }
 
+    /**
+     * Delete the node with the key sortableString if it exists
+     * @param sortableString The key of the node to delete
+     */
     public void delete(K sortableString) {
         BSTNode<T, K> node = head;
         BSTNode<T, K> preNode = null;
@@ -137,6 +174,11 @@ class BSTDictionary<T, K extends Sortable> implements Dictionary<T, K> {
         }
     }
 
+    /**
+     * Get the element for the given key if it exists
+     * @param sortableString The key to find
+     * @return The element of the node, null if the node dose not exist
+     */
     public T search(K sortableString) {
         BSTNode<T, K> node = head;
         while (node != null) {
